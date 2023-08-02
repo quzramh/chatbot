@@ -1,0 +1,189 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
+#include<ctype.h>
+#define MAX_STUDENTS 50
+#define MAX_COURSES 5
+
+// Struct to represent a student
+typedef struct {
+    char name[50];
+    int id;
+    float gpa;
+} Student;
+
+// Struct to represent a course
+typedef struct {
+    char name[50];
+    int courseCode;
+} Course;
+
+// Global arrays to store student and course data
+Student students[MAX_STUDENTS];
+int numStudents = 0;
+
+Course courses[MAX_COURSES] = {
+    { "Introduction to Computer Science", 101 },
+    { "Mathematics I", 201 },
+    { "Physics I", 301 },
+    { "English Composition", 401 },
+    { "History of Science", 501 }
+};
+int numCourses = 5;
+
+// Function to get user input and convert to lowercase
+void getLowercaseInput(char* input) {
+    printf("You: ");
+    fgets(input, 100, stdin);
+    input[strcspn(input, "\n")] = 0; // Remove the newline character from input
+    for (int i = 0; input[i]; i++) {
+        input[i] = tolower(input[i]);
+    }
+}
+
+// Function to handle bot responses
+void botResponse(const char* response) {
+    printf("Bot: %s\n", response);
+}
+
+// Function to collect user details
+void collectUserDetails() {
+    char name[50], email[100];
+    printf("Bot: Let's start by collecting some details.\n");
+    printf("Bot: What is your name? ");
+    fgets(name, 50, stdin);
+    name[strcspn(name, "\n")] = 0;
+    printf("Bot: Hi, %s! Please provide your email address: ", name);
+    fgets(email, 100, stdin);
+    email[strcspn(email, "\n")] = 0;
+    printf("Bot: Thank you, %s! We have your details. How can I assist you ?\n", name);
+}
+void contactdetails(){
+    botResponse("Contact details\nEmail:mite@gmail.com\nPhone:9999999999");
+}
+// Function to handle course registration and enrollment queries
+void courseRegistrationQueries() {
+    botResponse("For course registration and enrollment queries, please visit our college website or contact the admission office.");
+}
+
+// Function to handle teacher's assistant and administrative tasks
+void teacherAssistantTasks() {
+    botResponse("As a teacher's assistant, I can help with administrative tasks, scheduling reminders, and sharing resources. Please let me know how I can assist you.");
+}
+
+// Function to collect customer feedback
+void collectFeedback() {
+    char feedback[200];
+    printf("Bot: We value your feedback. Please share your thoughts with us: ");
+    fgets(feedback, 200, stdin);
+    feedback[strcspn(feedback, "\n")] = 0;
+    botResponse("Thank you for your feedback. We appreciate your input!");
+}
+void listEngineeringCourses() {
+    botResponse("We offer the following engineering courses:\n"
+               "1. Computer Science Engineering\n"
+               "2. Mechanical Engineering\n"
+               "3. Electrical Engineering\n"
+               "4. Civil Engineering\n"
+               "5. Electronics and Communication Engineering\n");
+}
+void addStudent() {
+    if (numStudents >= MAX_STUDENTS) {
+        botResponse("Sorry, the system is full and cannot add more students.");
+        return;
+    }
+
+    Student newStudent;
+    printf("Bot: Please enter the student's name: ");
+    fgets(newStudent.name, 50, stdin);
+    newStudent.name[strcspn(newStudent.name, "\n")] = 0;
+
+    printf("Bot: Enter the student's ID: ");
+    scanf("%d", &newStudent.id);
+    getchar(); // Clear the newline character from the input buffer
+
+    printf("Bot: Enter the student's GPA: ");
+    scanf("%f", &newStudent.gpa);
+    getchar(); // Clear the newline character from the input buffer
+
+    students[numStudents] = newStudent;
+    numStudents++;
+
+    botResponse("Bot: Student added successfully!");
+}
+
+// Function to display all students in the system
+void displayStudents() {
+    botResponse("Bot: Here are the students in the system:");
+
+    for (int i = 0; i < numStudents; i++) {
+        printf("%d. %s (ID: %d, GPA: %.2f)\n", i + 1, students[i].name, students[i].id, students[i].gpa);
+    }
+}
+
+// Function to handle administrative tasks
+void handleAdministrativeTasks() {
+    botResponse("I can assist you with various administrative tasks, such as managing student records, class schedules, and grading\nWhat would you like to do?\n1. Add a student\n2. Display all students\n3. Add a course\n4. Display all courses\n5. Exit");
+
+    char input[100];
+
+    while (true) {
+        getLowercaseInput(input);
+
+        if (strstr(input, "exit") != NULL || strstr(input, "bye") != NULL) {
+            botResponse("Goodbye! Have a great day!");
+            break;
+        } else if (strstr(input, "add a student") != NULL || strstr(input, "student") != NULL) {
+            addStudent();
+        } else if (strstr(input, "display all students") != NULL || strstr(input, "students") != NULL) {
+            displayStudents();
+        } else if (strstr(input, "add a course") != NULL || strstr(input, "course") != NULL) {
+            // Implement logic to add a new course (similar to adding a student)
+            botResponse("Course added successfully!");
+        } else if (strstr(input, "display all courses") != NULL || strstr(input, "courses") != NULL) {
+            // Implement logic to display all courses
+            botResponse("Here are the courses in the system:");
+            for (int i = 0; i < numCourses; i++) {
+                printf("%d. %s (Course Code: %d)\n", i + 1, courses[i].name, courses[i].courseCode);
+            }
+        } else {
+            botResponse("I'm sorry, I don't understand. Can you please rephrase your request?");
+        }
+    }
+}
+// Function to answer questions and enquiries
+void answerQuestions() {
+    char input[100];
+
+    while (true) {
+        getLowercaseInput(input);
+
+        if (strstr(input, "bye") != NULL) {
+            botResponse("Goodbye! Have a great day!");
+            break;
+        }
+        else if (strstr(input, "registration") != NULL || strstr(input, "enrollment") != NULL ||strstr(input, "admission") != NULL) {
+            courseRegistrationQueries();
+        } else if (strstr(input, "teacher") != NULL || strstr(input, "assistant") != NULL) {
+            teacherAssistantTasks();
+        }else if (strstr(input, "courses") != NULL || strstr(input, "courses") != NULL) {
+            listEngineeringCourses();
+        } else if (strstr(input, "feedback") != NULL) {
+            collectFeedback();
+        } else if (strstr(input, "assistant") != NULL || strstr(input, "administrative") != NULL) {
+            handleAdministrativeTasks();
+        }else if (strstr(input, "contact") != NULL || strstr(input, "enrollment") != NULL) {
+            contactdetails();
+        } else {
+            botResponse("I'm sorry, I don't understand. Can you please rephrase your question?");
+        }
+    }
+}
+
+int main() {
+    botResponse("Hello! I am an EducationBot.");
+    collectUserDetails();
+    answerQuestions();
+
+    return 0;
+}
