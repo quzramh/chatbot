@@ -135,16 +135,17 @@ void answerQuestions() {
             teacherAssistantTasks();
         }else if (strstr(input, "courses") != NULL || strstr(input, "courses") != NULL) {
             listEngineeringCourses();
-        } else if (strstr(input, "feedback") != NULL) {
-            collectFeedback();
-        } else if (strstr(input, "assistant") != NULL || strstr(input, "administrative") != NULL) {
+        }
+         else if (strstr(input, "assistant") != NULL || strstr(input, "administrative") != NULL) {
             handleAdministrativeTasks();
         }else if (strstr(input, "contact") != NULL || strstr(input, "enrollment") != NULL) {
             contactdetails();
-        } else {
+         }else {
             botResponse("I'm sorry, I don't understand. Can you please rephrase your question?");
         }
+        collectFeedback();
     }
+     
 }
 
 int main() {
