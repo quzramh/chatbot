@@ -1,4 +1,4 @@
-#include <stdio.h>
+tu#include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
 #include<ctype.h>
@@ -12,24 +12,7 @@ typedef struct {
     float gpa;
 } Student;
 
-// Struct to represent a course
-typedef struct {
-    char name[50];
-    int courseCode;
-} Course;
-
-// Global arrays to store student and course data
-Student students[MAX_STUDENTS];
-int numStudents = 0;
-
-Course courses[MAX_COURSES] = {
-    { "Introduction to Computer Science", 101 },
-    { "Mathematics I", 201 },
-    { "Physics I", 301 },
-    { "English Composition", 401 },
-    { "History of Science", 501 }
-};
-int numCourses = 5;
+// 
 
 // Function to get user input and convert to lowercase
 void getLowercaseInput(char* input) {
@@ -137,15 +120,6 @@ void handleAdministrativeTasks() {
             addStudent();
         } else if (strstr(input, "display all students") != NULL || strstr(input, "students") != NULL) {
             displayStudents();
-        } else if (strstr(input, "add a course") != NULL || strstr(input, "course") != NULL) {
-            // Implement logic to add a new course (similar to adding a student)
-            botResponse("Course added successfully!");
-        } else if (strstr(input, "display all courses") != NULL || strstr(input, "courses") != NULL) {
-            // Implement logic to display all courses
-            botResponse("Here are the courses in the system:");
-            for (int i = 0; i < numCourses; i++) {
-                printf("%d. %s (Course Code: %d)\n", i + 1, courses[i].name, courses[i].courseCode);
-            }
         } else {
             botResponse("I'm sorry, I don't understand. Can you please rephrase your request?");
         }
